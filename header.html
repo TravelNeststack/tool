@@ -1,0 +1,48 @@
+<header class="bg-primary text-white py-3 mb-4 shadow-sm">
+  <div class="container d-flex flex-wrap align-items-center justify-content-between">
+    <a href="index.html" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+      <span class="fs-3 fw-bold"><i class="bi bi-tools me-2"></i>Multi-Tools</span>
+    </a>
+    <nav>
+      <ul class="nav">
+        <li class="nav-item"><a href="index.html" class="nav-link text-white"><i class="bi bi-house-door me-1"></i>Home</a></li>
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link text-white dropdown-toggle" id="categoriesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-grid me-1"></i>Categories</a>
+          <ul class="dropdown-menu" aria-labelledby="categoriesDropdown" id="categories-menu">
+            <!-- Categories will be injected by JS -->
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link text-white" data-bs-toggle="modal" data-bs-target="#contactModal"><i class="bi bi-envelope me-1"></i>Contact</a>
+        </li>
+      </ul>
+    </nav>
+    <div class="d-none d-md-block" style="width: 250px;">
+      <!-- Search bar placeholder, actual search is in main -->
+    </div>
+  </div>
+  <!-- Contact Modal -->
+  <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="contactModalLabel">Contact Us</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="contactForm">
+            <div class="mb-3">
+              <label for="contactEmail" class="form-label">Email address</label>
+              <input type="email" class="form-control" id="contactEmail" required>
+            </div>
+            <div class="mb-3">
+              <label for="contactMessage" class="form-label">Message</label>
+              <textarea class="form-control" id="contactMessage" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Send</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</header> 

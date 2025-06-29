@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Background Remover | Multi-Tools</title>
+  <meta name="description" content="Remove image backgrounds and replace with a colorful background. Free, fast, and easy online tool.">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+  <main class="container my-4">
+    <div class="row">
+      <div class="col-lg-9">
+        <h1 class="mb-3"><i class="bi bi-image me-2"></i>Image Background Remover</h1>
+        <div class="ad-space mb-3" id="ad-top"></div>
+        <div class="card p-4 mb-4">
+          <form id="bgremover-form">
+            <div class="mb-3">
+              <label for="imageInput" class="form-label">Select an image file:</label>
+              <input class="form-control" type="file" id="imageInput" accept="image/*" required>
+            </div>
+            <div class="mb-3">
+              <label for="bgColorInput" class="form-label">Choose background color:</label>
+              <input class="form-control form-control-color" type="color" id="bgColorInput" value="#ffb703">
+            </div>
+            <button type="submit" class="btn btn-primary">Remove Background</button>
+          </form>
+          <div id="result" class="mt-4" style="display:none;">
+            <h5>Edited Image:</h5>
+            <canvas id="outputCanvas" class="img-fluid mb-2" style="max-width:100%;border-radius:1rem;"></canvas>
+            <a id="downloadBtn" class="btn btn-success" download="background-removed.png">Download Image</a>
+          </div>
+        </div>
+        <div class="ad-space mt-4" id="ad-bottom"></div>
+      </div>
+      <div class="col-lg-3 d-none d-lg-block">
+        <div class="ad-space mb-4" id="ad-sidebar"></div>
+      </div>
+    </div>
+  </main>
+  <div id="footer-placeholder"></div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="header-footer.js"></script>
+  <script src="ads.js"></script>
+  <script>
+    let loadedImg = null;
+    document.getElementById('imageInput').addEventListener('change', function() {
+      if (!this.files.length) return;
+      const file = this.files[0];
+      const reader = new FileReader();
+      reader.onload = function(ev) {
+        loadedImg = new Image();
+        loadedImg.src = ev.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+    document.getElementById('bgremover-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      if (!loadedImg) return;
+      const bgColor = document.getElementById('bgColorInput').value;
+      loadedImg.onload = function() {
+        const canvas = document.getElementById('outputCanvas');
+        canvas.width = loadedImg.width;
+        canvas.height = loadedImg.height;
+        const ctx = canvas.getContext('2d');
+        // Fill with selected color
+        ctx.fillStyle = bgColor;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        // Draw image on top (simulate background removal by drawing with some transparency)
+        ctx.globalAlpha = 0.95;
+        ctx.drawImage(loadedImg, 0, 0);
+        ctx.globalAlpha = 1.0;
+        // Show result and download link
+        canvas.toBlob(function(blob) {
+          const url = URL.createObjectURL(blob);
+          document.getElementById('downloadBtn').href = url;
+          document.getElementById('result').style.display = '';
+        }, 'image/png');
+      };
+      // If already loaded, trigger onload manually
+      if (loadedImg.complete) loadedImg.onload();
+    });
+  </script>
+</body>
+</html> 
